@@ -3,7 +3,7 @@ MAINTAINER Eric Bridgeford <ericwb95@gmail.com>
 
 #--------Environment Variables-----------------------------------------------#
 ENV NDMG_URL https://github.com/neurodata/ndmg.git
-ENV ATLASES http://openconnecto.me/mrdata/share/eric_atlases/fmri_atlases.zip
+ENV ATLASES http://openconnecto.me/mrdata/share/atlases/
 ENV AFNI_URL https://afni.nimh.nih.gov/pub/dist/bin/linux_fedora_21_64/@update.afni.binaries
 ENV LIBXP_URL http://mirrors.kernel.org/ubuntu/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb
 
