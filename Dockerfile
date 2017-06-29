@@ -84,7 +84,7 @@ RUN useradd -m -s /bin/bash sic-user
 
 RUN mkdir -p /home/sic-user/.jupyter
 COPY jupyter_notebook_config.py /home/sic-user/.jupyter
-COPY sic_ndmg.ipynb /home/sic-user
+COPY mrilab.ipynb /home/sic-user
 WORKDIR /home/sic-user
 
 ENV TINI_VERSION v0.6.0
