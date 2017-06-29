@@ -1,10 +1,9 @@
-FROM bids/base_fsl:5.0.9-3
+FROM flashx/flashx
 MAINTAINER Eric Bridgeford <ericwb95@gmail.com>
 
 #--------Environment Variables-----------------------------------------------#
 ENV NDMG_URL https://github.com/neurodata/ndmg.git
-ENV FMRI_ATLASES http://openconnecto.me/mrdata/share/eric_atlases/fmri_atlases.zip
-ENV DWI_ATLASES http://openconnecto.me/mrdata/share/eric_atlases/dwi_atlases.zip
+ENV ATLASES http://openconnecto.me/mrdata/share/eric_atlases/fmri_atlases.zip
 ENV AFNI_URL https://afni.nimh.nih.gov/pub/dist/bin/linux_fedora_21_64/@update.afni.binaries
 ENV LIBXP_URL http://mirrors.kernel.org/ubuntu/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb
 
@@ -61,12 +60,7 @@ RUN a=a \
 RUN \
     mkdir /ndmg_atlases && \
     cd /ndmg_atlases && \
-    wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $FMRI_ATLASES && \
-    unzip fmri_atlases.zip
-RUN \
-    cd /ndmg_atlases && \
-    wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $DWI_ATLASES && \
-    unzip dwi_atlases.zip
+    wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
 ADD ./.vimrc ~/.vimrc
 
@@ -80,19 +74,7 @@ RUN apt-get -y install ipython ipython-notebook git &&\
 		pip install --upgrade pip
 RUN pip install jupyter
 
-RUN useradd -m -s /bin/bash sic-user
-
-RUN mkdir -p /home/sic-user/.jupyter
-COPY jupyter_notebook_config.py /home/sic-user/.jupyter
-COPY mrilab.ipynb /home/sic-user
-WORKDIR /home/sic-user
-
-ENV TINI_VERSION v0.6.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
-
-USER sic-user
+COPY jupyter_notebook_config.py ~/
 
 EXPOSE 8888
 CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0"]
