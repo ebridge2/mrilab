@@ -6,7 +6,7 @@ ENV NDMG_URL https://github.com/neurodata/ndmg.git
 ENV ATLASES http://openconnecto.me/mrdata/share/atlases/
 ENV AFNI_URL https://afni.nimh.nih.gov/pub/dist/bin/linux_fedora_21_64/@update.afni.binaries
 ENV LIBXP_URL http://mirrors.kernel.org/ubuntu/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb
-
+ENV FSL_DAT http://openconnecto.me/mrdata/share/fsl_data.zip
 
 #--------Initial Configuration-----------------------------------------------#
 # download/install basic dependencies, and set up python
@@ -73,6 +73,11 @@ RUN apt-get -y install python2.7 python-pip python-dev
 RUN apt-get -y install ipython ipython-notebook git &&\
 		pip install --upgrade pip
 RUN pip install jupyter
+
+RUN \
+    cd /usr/share/fsl/ \
+    && wget $FSL_DAT \
+    && unzip fsl_data.zip
 
 COPY jupyter_notebook_config.py ~/
 
