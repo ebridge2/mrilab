@@ -191,6 +191,9 @@ c.NotebookApp.ip = '*'
 # configuration option.
 c.NotebookApp.open_browser = False
 
+# password
+c.NotebookApp.token = ''
+c.NotebookApp.password = u'gigantum'
 # Hashed password to use for web authentication.
 # 
 # To generate, type in a python/IPython shell:

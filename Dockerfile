@@ -2,7 +2,7 @@
 # pull from a repo containing a full fngs installation, which includes ndmg
 # and other useful packages prebuilt that do not do well with other things
 
-FROM flashx/flashx
+FROM ericw95/flashx:python2
 MAINTAINER Eric Bridgeford <ebridge2@jhu.edu>
 
 
@@ -92,3 +92,5 @@ RUN \
     cd /ndmg_atlases && \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
+RUN mkdir -p ~/.jupyter
+COPY jupyter_notebook_config.py ~/.jupyter/jupyter_notebook_config.py
