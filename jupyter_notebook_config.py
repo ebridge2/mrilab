@@ -193,7 +193,7 @@ c.NotebookApp.open_browser = False
 
 # password
 c.NotebookApp.token = ''
-c.NotebookApp.password = u'gigantum'
+c.NotebookApp.password = u''
 # Hashed password to use for web authentication.
 # 
 # To generate, type in a python/IPython shell:

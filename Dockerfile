@@ -82,7 +82,7 @@ RUN \
     boto3 awscli matplotlib==1.5.3 plotly==1.12.1 nilearn>=0.2 sklearn>=0.0 \
     pandas cython
 
-RUN \
+RUN a=a \
     git clone -b eric-dev-bg $NDMG_URL /ndmg && \
     cd /ndmg && \
     python setup.py install 
@@ -92,5 +92,8 @@ RUN \
     cd /ndmg_atlases && \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
-RUN mkdir -p ~/.jupyter
-COPY jupyter_notebook_config.py ~/.jupyter/jupyter_notebook_config.py
+RUN mkdir -p /root/.jupyter
+COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+COPY flashX_igraph_mini.ipynb /root/
+
+WORKDIR /root/
