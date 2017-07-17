@@ -96,4 +96,6 @@ RUN mkdir -p /root/.jupyter
 COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 COPY flashX_igraph_mini.ipynb /root/
 
-WORKDIR /root/
+WORKDIR /
+RUN git clone https://github.com/ebridge2/mrilab.git
+WORKDIR /mrilab/mini_demo
