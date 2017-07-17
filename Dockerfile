@@ -96,6 +96,9 @@ RUN mkdir -p /root/.jupyter
 COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 COPY flashX_igraph_mini.ipynb /root/
 
+RUN R -e "devtools::install_github('ebridge2/Discriminability')"
+RUN R -e "install.packages('Rmisc')"
+
 WORKDIR /
 RUN git clone https://github.com/ebridge2/mrilab.git
 WORKDIR /mrilab/mini_demo
