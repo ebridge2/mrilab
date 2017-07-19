@@ -27,7 +27,7 @@ RUN \
     apt-get install -y git libpng-dev libfreetype6-dev pkg-config \
     zlib1g-dev g++ vim
 
-COPY ../docker/neurodebian.gpg /root/.neurodebian.gpg
+COPY docker/neurodebian.gpg /root/.neurodebian.gpg
 
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository universe
