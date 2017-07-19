@@ -93,8 +93,8 @@ RUN \
     cd /ndmg_atlases && \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
-WORKDIR /
-RUN git clone https://github.com/ebridge2/mrilab.git
+RUN R -e "devtools::install_github('ebridge2/Discriminability')"
+RUN R -e "install.packages('Rmisc')"
 
 #-------TINI SETUP---------------------------------------------------------#
 
