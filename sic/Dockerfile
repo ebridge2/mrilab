@@ -94,7 +94,7 @@ RUN \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
 RUN R -e "devtools::install_github('ebridge2/Discriminability')"
-RUN R -e "install.packages('Rmisc')"
+RUN R -e "install.packages(c('stringr', 'Rmisc'), repos='$CRAN_URL')"
 
 #-------TINI SETUP---------------------------------------------------------#
 
@@ -102,7 +102,7 @@ RUN useradd -m -s /bin/bash sic-user
 
 RUN mkdir -p /home/sic-user/.jupyter
 COPY jupyter_notebook_config.py /home/sic-user/.jupyter
-COPY flashx_igraph_sic.ipynb /home/sic-user
+COPY flashx-igraph_ndmg_notebook.ipynb /home/sic-user
 WORKDIR /home/sic-user
 
 ENV TINI_VERSION v0.6.0
