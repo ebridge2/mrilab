@@ -13,6 +13,7 @@ ENV AFNI_URL https://afni.nimh.nih.gov/pub/dist/bin/linux_fedora_21_64/@update.a
 ENV LIBXP_URL http://mirrors.kernel.org/ubuntu/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb
 ENV CRAN_URL https://cran.rstudio.com/
 ENV NDEB_URL http://neuro.debian.net/lists/xenial.us-ca.full
+ENV TINI_URL https://github.com/krallin/tini/releases/download/ 
 
 #--------Initial Configuration-----------------------------------------------#
 # download/install basic dependencies, and set up python
@@ -26,7 +27,7 @@ RUN \
     apt-get install -y git libpng-dev libfreetype6-dev pkg-config \
     zlib1g-dev g++ vim
 
-COPY docker/neurodebian.gpg /root/.neurodebian.gpg
+COPY ../docker/neurodebian.gpg /root/.neurodebian.gpg
 
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository universe
@@ -92,10 +93,24 @@ RUN \
     cd /ndmg_atlases && \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
-RUN mkdir -p /root/.jupyter
-COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
-COPY flashX_igraph_mini.ipynb /root/
-
 WORKDIR /
 RUN git clone https://github.com/ebridge2/mrilab.git
-WORKDIR /mrilab/mini_demo
+
+#-------TINI SETUP---------------------------------------------------------#
+
+RUN useradd -m -s /bin/bash sic-user
+
+RUN mkdir -p /home/sic-user/.jupyter
+COPY jupyter_notebook_config.py /home/sic-user/.jupyter
+COPY flashx_igraph_sic.ipynb /home/sic-user
+WORKDIR /home/sic-user
+
+ENV TINI_VERSION v0.6.0
+ADD ${TINI_URL}${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+USER sic-user
+
+EXPOSE 8888
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0"]
