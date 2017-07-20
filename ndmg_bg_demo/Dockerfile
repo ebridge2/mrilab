@@ -102,7 +102,7 @@ RUN useradd -m -s /bin/bash sic-user
 
 RUN mkdir -p /home/sic-user/.jupyter
 COPY jupyter_notebook_config.py /home/sic-user/.jupyter
-COPY flashx-igraph_ndmg_notebook.ipynb /home/sic-user
+COPY for_user/* /home/sic-user/
 WORKDIR /home/sic-user
 
 ENV TINI_VERSION v0.6.0
