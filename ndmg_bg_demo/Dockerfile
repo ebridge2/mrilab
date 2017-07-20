@@ -94,7 +94,7 @@ RUN \
     wget -rnH --cut-dirs=3 --no-parent -P /ndmg_atlases $ATLASES
 
 RUN R -e "devtools::install_github('ebridge2/Discriminability')"
-RUN R -e "install.packages(c('stringr', 'Rmisc'), repos='$CRAN_URL')"
+RUN R -e "install.packages(c('stringr', 'Rmisc', 'png'), repos='$CRAN_URL')"
 
 #-------TINI SETUP---------------------------------------------------------#
 
