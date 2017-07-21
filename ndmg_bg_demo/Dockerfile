@@ -27,7 +27,7 @@ RUN \
     apt-get install -y git libpng-dev libfreetype6-dev pkg-config \
     zlib1g-dev g++ vim
 
-COPY docker/neurodebian.gpg /root/.neurodebian.gpg
+COPY docker/neurodebian.gpg /home/sic-user/.neurodebian.gpg
 
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository universe
@@ -46,13 +46,13 @@ RUN chsh -s /usr/bin/tcsh && \
     tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras && \
     chsh -s /bin/bash && \
     cp $HOME/abin/AFNI.afnirc $HOME/.afnirc && \
-    echo "PATH=$PATH:/root/abin" >> ~/.bashrc
+    echo "PATH=$PATH:/home/sic-user/abin" >> ~/.bashrc
 
 #---------FSL INSTALL---------------------------------------------------------#
 # setup FSL using debian
 RUN \
     curl -sSL $NDEB_URL >> /etc/apt/sources.list.d/neurodebian.sources.list && \
-    apt-key add /root/.neurodebian.gpg && \
+    apt-key add /home/sic-user/.neurodebian.gpg && \
     (apt-key adv --refresh-keys --keyserver hkp://ha.pool.sks-keyservers.net 0xA5D32F012649A5A9 || true) && \
     apt-get update
 RUN \
